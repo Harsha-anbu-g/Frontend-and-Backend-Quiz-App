@@ -322,17 +322,34 @@ npm run build
 
 ## Screenshots
 
-| Screenshot                                                | Description                     |
-| --------------------------------------------------------- | ------------------------------- |
-| ![Add Question](Screenshot/add-question.png)              | Adding a new question           |
-| ![All Questions](Screenshot/findall.png)                  | Fetching all questions          |
-| ![By Category](Screenshot/findall-category.png)           | Filtering questions by category |
-| ![Category Java](Screenshot/category_java.png)            | Java category questions         |
-| ![Get Quiz](Screenshot/get-1.png)                         | Retrieving quiz questions       |
-| ![201 Created](Screenshot/210-created.png)                | Successful creation response    |
-| ![404 Not Found](Screenshot/404-not%20found.png)          | Not found error                 |
-| ![Java Random](Screenshot/java%20random.png)              | Random Java questions           |
-| ![Postgre Answer](Screenshot/answer%20from%20postgre.png) | Data from PostgreSQL            |
+### Frontend UI
+
+| Screenshot                                                          | Description                              |
+| ------------------------------------------------------------------- | ---------------------------------------- |
+| ![Home Page](Screenshot/Home%20page.png)                            | Dashboard with stats and quick actions   |
+| ![Home Page Bottom](Screenshot/Home%20page%20.png)                  | Dashboard cards for all sections         |
+| ![Browse Questions](Screenshot/All%20Questions.png)                 | View all questions with answers shown    |
+| ![Filter by Category](Screenshot/Question%20Filter.png)             | Filter questions by category dropdown    |
+| ![Delete Question](Screenshot/Delete%20question.png)                | Delete confirmation dialog               |
+| ![Add Question](Screenshot/Add%20Question.png)                      | Add a new question form                  |
+| ![Create Quiz](Screenshot/Create%20new%20Question.png)              | Build a quiz with filters                |
+| ![Saved Quizzes](Screenshot/Saved%20Quiz.png)                       | Quiz library with take/delete options    |
+| ![Take Quiz](Screenshot/Test%20-%20Exam.png)                        | Taking a quiz with radio button answers  |
+| ![Quiz Result](Screenshot/Result%20Calculation.png)                 | Score result after submission             |
+
+### Postman API Testing (Old)
+
+| Screenshot                                                                  | Description                     |
+| --------------------------------------------------------------------------- | ------------------------------- |
+| ![Add Question](Screenshot%20Postman/add-question.png)                      | Adding a new question           |
+| ![All Questions](Screenshot%20Postman/findall.png)                          | Fetching all questions          |
+| ![By Category](Screenshot%20Postman/findall-category.png)                   | Filtering questions by category |
+| ![Category Java](Screenshot%20Postman/category_java.png)                    | Java category questions         |
+| ![Get Quiz](Screenshot%20Postman/get-1.png)                                 | Retrieving quiz questions       |
+| ![201 Created](Screenshot%20Postman/210-created.png)                        | Successful creation response    |
+| ![404 Not Found](Screenshot%20Postman/404-not%20found.png)                  | Not found error                 |
+| ![Java Random](Screenshot%20Postman/java%20random.png)                      | Random Java questions           |
+| ![Postgre Answer](Screenshot%20Postman/answer%20from%20postgre.png)         | Data from PostgreSQL            |
 
 ---
 
