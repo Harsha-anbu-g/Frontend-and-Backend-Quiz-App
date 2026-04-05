@@ -357,7 +357,6 @@ npm run build
 | ![Get Quiz](Screenshot%20Postman/get-1.png)                                 | Retrieving quiz questions       |
 | ![201 Created](Screenshot%20Postman/210-created.png)                        | Successful creation response    |
 | ![404 Not Found](Screenshot%20Postman/404-not%20found.png)                  | Not found error                 |
-| ![Java Random](Screenshot%20Postman/java%20random.png)                      | Random Java questions           |
 
 ---
 
