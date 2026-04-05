@@ -337,7 +337,7 @@ npm run build
 | ![Take Quiz](Screenshot/Test%20-%20Exam.png)                        | Taking a quiz with radio button answers  |
 | ![Quiz Result](Screenshot/Result%20Calculation.png)                 | Score result after submission             |
 
-### PostgreSQL Database
+### Database PostgreSQL
 
 | Screenshot                                                                  | Description                              |
 | --------------------------------------------------------------------------- | ---------------------------------------- |
