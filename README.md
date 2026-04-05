@@ -334,8 +334,8 @@ npm run build
 | ![Add Question](Screenshot/Add%20Question.png)                      | Add a new question form                  |
 | ![Create Quiz](Screenshot/Create%20new%20Question.png)              | Build a quiz with filters                |
 | ![Saved Quizzes](Screenshot/Saved%20Quiz.png)                       | Quiz library with take/delete options    |
-| ![Take Quiz](Screenshot/Test%20-%20Exam.png)                        | Taking a quiz with radio button answers  |
-| ![Quiz Result](Screenshot/Result%20Calculation.png)                 | Score result after submission             |
+| ![Take Quiz](Screenshot/Test-%20Exam.png)                          | Taking a quiz with radio button answers  |
+| ![Quiz Result](Screenshot/Result%20calculation.png)                 | Score result after submission             |
 
 ### Database PostgreSQL
 
@@ -358,7 +358,6 @@ npm run build
 | ![201 Created](Screenshot%20Postman/210-created.png)                        | Successful creation response    |
 | ![404 Not Found](Screenshot%20Postman/404-not%20found.png)                  | Not found error                 |
 | ![Java Random](Screenshot%20Postman/java%20random.png)                      | Random Java questions           |
-| ![Postgre Answer](Screenshot%20Postman/answer%20from%20postgre.png)         | Data from PostgreSQL            |
 
 ---
 
