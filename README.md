@@ -1,6 +1,6 @@
-# Quiz Application - Spring Boot REST API
+# Quiz Application - Spring Boot + React
 
-A RESTful Quiz Application built with **Spring Boot** that allows users to manage questions, create quizzes, and submit answers for scoring.
+A quiz application built with **Spring Boot** and **React** that allows users to manage questions, create quizzes, take quizzes, and submit answers for scoring.
 
 ---
 
@@ -10,6 +10,7 @@ A RESTful Quiz Application built with **Spring Boot** that allows users to manag
 - **Spring Boot 3.5.7**
 - **Spring Data JPA** — ORM and database access
 - **PostgreSQL** — Relational database
+- **React + Vite** — Frontend UI
 - **Lombok** — Boilerplate code reduction
 - **Maven** — Build and dependency management
 
@@ -34,6 +35,12 @@ src/main/java/com/example/quizapp/
 └── service/
     ├── QuestionService.java         # Business logic for questions
     └── QuizService.java             # Business logic for quizzes
+
+frontend/
+├── src/App.jsx                     # Main frontend flow
+├── src/api/                        # Fetch helpers for backend calls
+├── src/components/                 # Simple UI components
+└── package.json                    # Frontend dependencies and scripts
 ```
 
 ---
@@ -144,6 +151,17 @@ DELETE /Question/delete/5
 POST /quiz/create?category=Java&numQ=5&title=Java Basics Quiz
 ```
 
+**Response Example:**
+
+```json
+{
+  "message": "Quiz created successfully",
+  "quizId": 1,
+  "title": "Java Basics Quiz",
+  "questionCount": 5
+}
+```
+
 #### Get Quiz Questions — `GET /quiz/get/{id}`
 
 Returns questions wrapped in `QuestionWrapper` (without the correct answer), so users cannot see the right answer before submitting.
@@ -183,21 +201,27 @@ Returns questions wrapped in `QuestionWrapper` (without the correct answer), so 
 - **Java 17** or higher
 - **PostgreSQL** installed and running
 - **Maven** (or use the included Maven wrapper)
+- **Node.js** and **npm**
 
 ---
 
 ## Database Configuration
 
-The application connects to a PostgreSQL database. Update [application.properties](src/main/resources/application.properties) with your database credentials:
+The backend connects to PostgreSQL. It now supports environment variables with local fallbacks:
 
 ```properties
 spring.datasource.driver-class-name=org.postgresql.Driver
-spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
-spring.datasource.username=postgres
-spring.datasource.password=your_password
+spring.datasource.url=${DB_URL:jdbc:postgresql://localhost:5432/postgres}
+spring.datasource.username=${DB_USERNAME:postgres}
+spring.datasource.password=${DB_PASSWORD:0000}
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 ```
+
+This means:
+
+- local development can still use the default values
+- deployment can override them with `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD`
 
 > Hibernate's `ddl-auto=update` will automatically create/update tables based on the entity classes.
 
@@ -214,21 +238,85 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
 2. **Set up PostgreSQL**
    - Create or use an existing PostgreSQL database.
-   - Update the database credentials in `src/main/resources/application.properties`.
+   - Either use the default local values or set `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD`.
 
-3. **Build the project**
-
-   ```bash
-   ./mvnw clean install
-   ```
-
-4. **Run the application**
+3. **Run the backend**
 
    ```bash
    ./mvnw spring-boot:run
    ```
 
-   The server starts on **http://localhost:8080** by default.
+   The backend runs on **http://localhost:8080** by default.
+
+4. **Run the frontend**
+
+   ```bash
+   cd frontend
+   npm install
+   cp .env.example .env
+   npm run dev
+   ```
+
+   The frontend runs on **http://localhost:5173** by default.
+
+   You can change the backend URL with:
+
+   ```text
+   VITE_API_BASE_URL
+   ```
+
+5. **Open the frontend**
+
+   Visit:
+
+   ```text
+   http://localhost:5173
+   ```
+
+## Current Frontend Features
+
+The frontend is intentionally simple so it is easy to explain:
+
+- View all questions
+- Add a question
+- Create a quiz
+- Take a quiz
+- See the result
+
+It currently uses a simple button-based view switch instead of routing to keep the code beginner-friendly.
+
+## Demo Flow
+
+If you need to explain the app quickly to someone, this is the easiest flow:
+
+1. Open the frontend and view all questions
+2. Add a new question with the `Add Question` screen
+3. Create a quiz by category and number of questions
+4. Answer the quiz in the `Take Quiz` screen
+5. Submit and show the result
+
+This gives you a full create -> read -> quiz -> result demo without needing to explain advanced frontend patterns.
+
+## Testing
+
+Backend tests use:
+
+- **JUnit 5**
+- **Mockito**
+- **Spring Boot Test**
+
+Run the backend tests with:
+
+```bash
+./mvnw test
+```
+
+Run the frontend production build check with:
+
+```bash
+cd frontend
+npm run build
+```
 
 ---
 

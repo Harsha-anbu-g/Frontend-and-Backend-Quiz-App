@@ -2,7 +2,7 @@ package com.example.quizapp.controller;
 
 import com.example.quizapp.model.Question;
 import com.example.quizapp.service.QuestionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +12,11 @@ import java.util.List;
 @RequestMapping("Question")
 public class QuestionController {
 
-    @Autowired
-    QuestionService questionService;
+    private final QuestionService questionService;
+
+    public QuestionController(QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @GetMapping("allQuestions")
     public ResponseEntity<List<Question>> getAllQuestions() {
@@ -27,7 +30,7 @@ public class QuestionController {
     }
 
     @PostMapping("add")
-    public ResponseEntity<String> addQuestion(@RequestBody Question question) {
+    public ResponseEntity<String> addQuestion(@Valid @RequestBody Question question) {
         return questionService.addQuestion(question);
     }
 
@@ -37,7 +40,7 @@ public class QuestionController {
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<String> updateQuestion(@PathVariable Integer id, @RequestBody Question question) {
+    public ResponseEntity<String> updateQuestion(@PathVariable Integer id, @Valid @RequestBody Question question) {
         return questionService.updateQuestion(id, question);
     }
 
