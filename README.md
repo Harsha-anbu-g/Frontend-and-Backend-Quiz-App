@@ -337,6 +337,15 @@ npm run build
 | ![Take Quiz](Screenshot/Test%20-%20Exam.png)                        | Taking a quiz with radio button answers  |
 | ![Quiz Result](Screenshot/Result%20Calculation.png)                 | Score result after submission             |
 
+### PostgreSQL Database
+
+| Screenshot                                                                  | Description                              |
+| --------------------------------------------------------------------------- | ---------------------------------------- |
+| ![Quiz DB](Screenshot%20postgresql/Quiz%20DB.png)                           | Quiz-Question join table in pgAdmin      |
+| ![Quiz Table](Screenshot%20postgresql/Quiz%20Table.png)                     | Quiz table with saved quizzes            |
+| ![Question Table](Screenshot%20postgresql/Question%20Table.png)             | Question table with all questions        |
+| ![Question-Quiz](Screenshot%20postgresql/Question-Quiz.png)                 | Quiz-Question relationship data          |
+
 ### Postman API Testing (Old)
 
 | Screenshot                                                                  | Description                     |
