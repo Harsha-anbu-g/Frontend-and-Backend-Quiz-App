@@ -38,3 +38,10 @@ build/
 ### Frontend ###
 node_modules/
 frontend/dist/
+
+### Personal Notes ###
+WORKLOG.md
+PLAN.md
+LEARNING.md
+HOW_IT_WORKS.txt
+.claude/
