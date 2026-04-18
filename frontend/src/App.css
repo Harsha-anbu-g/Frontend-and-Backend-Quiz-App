@@ -214,18 +214,18 @@
 }
 
 .home-phase--build {
-  border-color: rgba(70, 100, 200, 0.2);
-  background: rgba(248, 250, 255, 0.95);
+  border-color: rgba(26, 43, 60, 0.12);
+  background: rgba(255, 252, 245, 0.9);
 }
 
 .phase-badge--build {
-  background: rgba(70, 100, 200, 0.14);
-  color: #2a3f8c;
+  background: rgba(255, 145, 77, 0.18);
+  color: #8c4a18;
 }
 
 .home-phase--exam {
-  border-color: rgba(58, 130, 88, 0.25);
-  background: rgba(248, 255, 251, 0.95);
+  border-color: rgba(26, 43, 60, 0.12);
+  background: rgba(255, 252, 245, 0.9);
 }
 
 .phase-header {
