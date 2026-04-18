@@ -506,6 +506,24 @@ function App() {
           ) : null}
         </section>
       )}
+      {(currentView === 'home' || currentView === 'result') && <footer className="site-footer">
+        <div className="footer-about">
+          <p className="footer-name">Built by Harshavardhan</p>
+          <p className="footer-bio">
+            Full-stack developer passionate about Java, Spring Boot, and React.
+            This app was built and deployed as a personal project to practice end-to-end development.
+          </p>
+          <a
+            className="footer-link"
+            href="https://portfolioharsha.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Portfolio →
+          </a>
+        </div>
+        <p className="footer-copy">© {new Date().getFullYear()} Harshavardhan. All rights reserved.</p>
+      </footer>}
     </main>
   )
 }
