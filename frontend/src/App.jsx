@@ -76,7 +76,9 @@ function getSectionMeta(currentView, activeQuiz) {
 }
 
 function App() {
-  const [currentView, setCurrentView] = useState('home')
+  const [currentView, setCurrentView] = useState(
+    () => window.history.state?.view ?? 'home'
+  )
   const [questions, setQuestions] = useState([])
   const [questionBankCount, setQuestionBankCount] = useState(0)
   const [availableCategories, setAvailableCategories] = useState(['All'])
@@ -96,6 +98,22 @@ function App() {
   const [quizLibraryRefreshKey, setQuizLibraryRefreshKey] = useState(0)
   const [deletingQuizId, setDeletingQuizId] = useState(null)
   const [deletingQuestionId, setDeletingQuestionId] = useState(null)
+
+  function navigateTo(view) {
+    window.history.pushState({ view }, '', `#${view}`)
+    setCurrentView(view)
+  }
+
+  useEffect(() => {
+    window.history.replaceState({ view: currentView }, '', `#${currentView}`)
+
+    function handlePopState(event) {
+      setCurrentView(event.state?.view ?? 'home')
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
 
   useEffect(() => {
     let isMounted = true
@@ -190,7 +208,7 @@ function App() {
       await createQuestion(question)
       setNoticeType('success')
       setNoticeMessage('Question added successfully.')
-      setCurrentView('questions')
+      navigateTo('questions')
       setSelectedCategory('All')
       setRefreshKey((current) => current + 1)
     } finally {
@@ -208,7 +226,7 @@ function App() {
       setNoticeType('success')
       setNoticeMessage(`Quiz "${createdQuiz.title}" created successfully.`)
       setQuizLibraryRefreshKey((current) => current + 1)
-      setCurrentView('takeQuiz')
+      navigateTo('takeQuiz')
     } finally {
       setIsSubmitting(false)
     }
@@ -218,7 +236,7 @@ function App() {
     setQuizResult(result)
     setNoticeType('success')
     setNoticeMessage(`Quiz submitted. You scored ${result.score} out of ${result.total}.`)
-    setCurrentView('result')
+    navigateTo('result')
   }
 
   function handleTakeSavedQuiz(quiz) {
@@ -226,7 +244,7 @@ function App() {
     setQuizResult(null)
     setNoticeType('success')
     setNoticeMessage(`Opened quiz "${quiz.title}".`)
-    setCurrentView('takeQuiz')
+    navigateTo('takeQuiz')
   }
 
   async function handleDeleteQuiz(quiz) {
@@ -248,7 +266,7 @@ function App() {
         setActiveQuiz(null)
         setQuizResult(null)
         if (currentView === 'takeQuiz') {
-          setCurrentView('savedQuizzes')
+          navigateTo('savedQuizzes')
         }
       }
 
@@ -289,12 +307,12 @@ function App() {
   }
 
   function handleOpenTakeQuiz() {
-    setCurrentView(activeQuiz ? 'takeQuiz' : 'savedQuizzes')
+    navigateTo(activeQuiz ? 'takeQuiz' : 'savedQuizzes')
   }
 
   function handleOpenResult() {
     if (quizResult) {
-      setCurrentView('result')
+      navigateTo('result')
     }
   }
 
@@ -314,7 +332,7 @@ function App() {
         <nav className="site-nav" aria-label="Main navigation">
           <button
             className={currentView === 'home' ? 'nav-button active' : 'nav-button'}
-            onClick={() => setCurrentView('home')}
+            onClick={() => navigateTo('home')}
             type="button"
           >
             Home
@@ -325,7 +343,7 @@ function App() {
 
           <button
             className={currentView === 'questions' || currentView === 'add' ? 'nav-button active' : 'nav-button'}
-            onClick={() => setCurrentView('questions')}
+            onClick={() => navigateTo('questions')}
             type="button"
           >
             Question Bank
@@ -336,7 +354,7 @@ function App() {
 
           <button
             className={currentView === 'createQuiz' ? 'nav-button active' : 'nav-button'}
-            onClick={() => setCurrentView('createQuiz')}
+            onClick={() => navigateTo('createQuiz')}
             type="button"
           >
             Create Quiz
@@ -347,7 +365,7 @@ function App() {
 
           <button
             className={currentView === 'savedQuizzes' || currentView === 'takeQuiz' ? 'nav-button nav-button--exam active' : 'nav-button nav-button--exam'}
-            onClick={() => setCurrentView('savedQuizzes')}
+            onClick={() => navigateTo('savedQuizzes')}
             type="button"
           >
             Take Quiz
@@ -371,10 +389,10 @@ function App() {
           savedQuizCount={savedQuizzes.length}
           activeQuiz={activeQuiz}
           quizResult={quizResult}
-          onBrowseQuestions={() => setCurrentView('questions')}
-          onAddQuestion={() => setCurrentView('add')}
-          onCreateQuiz={() => setCurrentView('createQuiz')}
-          onOpenSavedQuizzes={() => setCurrentView('savedQuizzes')}
+          onBrowseQuestions={() => navigateTo('questions')}
+          onAddQuestion={() => navigateTo('add')}
+          onCreateQuiz={() => navigateTo('createQuiz')}
+          onOpenSavedQuizzes={() => navigateTo('savedQuizzes')}
           onTakeQuiz={handleOpenTakeQuiz}
           onViewResult={handleOpenResult}
         />
@@ -414,7 +432,7 @@ function App() {
                 <button
                   className="primary-button"
                   type="button"
-                  onClick={() => setCurrentView('add')}
+                  onClick={() => navigateTo('add')}
                 >
                   + Add Question
                 </button>
@@ -466,7 +484,7 @@ function App() {
                 <button
                   className="primary-button"
                   type="button"
-                  onClick={() => setCurrentView('savedQuizzes')}
+                  onClick={() => navigateTo('savedQuizzes')}
                 >
                   Open Saved Quizzes
                 </button>
@@ -485,7 +503,7 @@ function App() {
                 <button
                   className="primary-button"
                   type="button"
-                  onClick={() => setCurrentView('createQuiz')}
+                  onClick={() => navigateTo('createQuiz')}
                 >
                   Create another quiz
                 </button>
@@ -497,7 +515,7 @@ function App() {
                 <button
                   className="primary-button"
                   type="button"
-                  onClick={() => setCurrentView('savedQuizzes')}
+                  onClick={() => navigateTo('savedQuizzes')}
                 >
                   Open Saved Quizzes
                 </button>
