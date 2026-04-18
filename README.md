@@ -1,6 +1,8 @@
-# Quiz Application - Spring Boot + React
+# Quiz Studio
 
-A quiz application built with **Spring Boot** and **React** that allows users to manage questions, create quizzes, take quizzes, and submit answers for scoring.
+A full-stack quiz application built with **Spring Boot** and **React**, deployed live on the internet.
+
+**Live:** https://quiz-studio.vercel.app
 
 ---
 
@@ -273,29 +275,25 @@ This means:
    http://localhost:5173
    ```
 
-## Current Frontend Features
+## How It Works — 3-Step Flow
 
-The frontend is intentionally simple so it is easy to explain:
+The UI is designed around a clear preparation → exam flow:
 
-- View all questions
-- Add a question
-- Create a quiz
-- Take a quiz
-- See the result
+| Step | Section | What you do |
+|------|---------|-------------|
+| Step 1 | **Question Bank** | Add and manage questions stored in PostgreSQL |
+| Step 2 | **Create Your Quiz** | Generate a quiz by filtering category and difficulty |
+| Step 3 | **Take Exam** | Pick a saved quiz, answer all questions, submit for score |
 
-It currently uses a simple button-based view switch instead of routing to keep the code beginner-friendly.
+## Deployment
 
-## Demo Flow
+| Layer | Platform | URL |
+|-------|----------|-----|
+| Frontend (React) | Vercel | https://quiz-studio.vercel.app |
+| Backend (Spring Boot) | Railway | https://frontend-and-backend-quiz-app-production.up.railway.app |
+| Database (PostgreSQL) | Railway | Internal to Railway project |
 
-If you need to explain the app quickly to someone, this is the easiest flow:
-
-1. Open the frontend and view all questions
-2. Add a new question with the `Add Question` screen
-3. Create a quiz by category and number of questions
-4. Answer the quiz in the `Take Quiz` screen
-5. Submit and show the result
-
-This gives you a full create -> read -> quiz -> result demo without needing to explain advanced frontend patterns.
+The backend connects to the Railway PostgreSQL database via private network using Railway reference variables. No external database service required.
 
 ## Testing
 
