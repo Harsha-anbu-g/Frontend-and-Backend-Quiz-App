@@ -341,20 +341,13 @@ function App() {
           >
             Create Quiz
           </button>
-          <button
-            className={currentView === 'savedQuizzes' ? 'nav-button active' : 'nav-button'}
-            onClick={() => setCurrentView('savedQuizzes')}
-            type="button"
-          >
-            Saved Quizzes
-          </button>
 
           <span className="nav-divider" aria-hidden="true" />
           <span className="nav-group-label">Step 3</span>
 
           <button
-            className={currentView === 'takeQuiz' ? 'nav-button nav-button--exam active' : 'nav-button nav-button--exam'}
-            onClick={handleOpenTakeQuiz}
+            className={currentView === 'savedQuizzes' || currentView === 'takeQuiz' ? 'nav-button nav-button--exam active' : 'nav-button nav-button--exam'}
+            onClick={() => setCurrentView('savedQuizzes')}
             type="button"
           >
             Take Quiz

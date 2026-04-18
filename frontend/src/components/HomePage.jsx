@@ -85,17 +85,6 @@ export default function HomePage({
             </div>
           </article>
 
-          <article className="home-card">
-            <p className="summary-label">Library</p>
-            <h3>Saved quizzes</h3>
-            <p>Reopen or delete previously saved quizzes.</p>
-            <div className="home-card-actions">
-              <button className="primary-button" type="button" onClick={onOpenSavedQuizzes}>
-                Open Library
-              </button>
-              <span className="home-card-count">{savedQuizCount} saved</span>
-            </div>
-          </article>
         </section>
 
         {/* Step 3: Take Exam */}
@@ -109,16 +98,12 @@ export default function HomePage({
           </div>
 
           <article className="home-card">
-            <p className="summary-label">Take test</p>
-            <h3>{activeQuiz ? activeQuiz.title : 'No quiz selected'}</h3>
-            <p>
-              {activeQuiz
-                ? 'A quiz is ready — answer every question and submit.'
-                : 'Create or open a saved quiz first, then sit the exam here.'}
-            </p>
+            <p className="summary-label">Take Quiz</p>
+            <h3>Your saved quizzes</h3>
+            <p>Pick a saved quiz and start the exam. Your answers are submitted for scoring.</p>
             <div className="home-card-actions">
-              <button className="primary-button" type="button" onClick={onTakeQuiz}>
-                {activeQuiz ? 'Take Quiz' : 'Choose Quiz'}
+              <button className="primary-button" type="button" onClick={onOpenSavedQuizzes}>
+                Take Quiz
               </button>
             </div>
           </article>
