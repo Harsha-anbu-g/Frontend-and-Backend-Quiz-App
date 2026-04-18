@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5173", "http://localhost:3000", "https://frontend-and-backend-quiz-app-production.up.railway.app", "https://frontend-and-backend-quiz-app.vercel.app")
+                .allowedOrigins("http://localhost:5173", "http://localhost:3000", "https://frontend-and-backend-quiz-app-production.up.railway.app", "https://frontend-and-backend-quiz-app.vercel.app", "https://quiz-studio.vercel.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*");
     }
