@@ -33,9 +33,9 @@ export default function SavedQuizList({
       </div>
 
       <div className="saved-quiz-grid">
-        {quizzes.map((quiz) => (
+        {quizzes.map((quiz, index) => (
           <article className="saved-quiz-card" key={quiz.quizId}>
-            <p className="summary-label">Quiz #{quiz.quizId}</p>
+            <p className="summary-label">Quiz #{index + 1}</p>
             <h3>{quiz.title}</h3>
             <p>{quiz.questionCount} questions</p>
             <div className="saved-quiz-actions">
