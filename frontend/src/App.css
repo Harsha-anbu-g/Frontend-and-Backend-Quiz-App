@@ -16,9 +16,12 @@
 }
 
 .site-header,
-.content-panel,
-.home-hero {
+.content-panel {
   padding: 1.5rem;
+}
+
+.home-hero {
+  padding: 1rem 1.5rem;
 }
 
 .site-header {
@@ -67,6 +70,23 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  align-items: center;
+}
+
+.nav-divider {
+  width: 1px;
+  height: 1.5rem;
+  background: rgba(20, 33, 45, 0.15);
+  align-self: center;
+}
+
+.nav-group-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8c5a2b;
+  align-self: center;
 }
 
 .nav-button,
@@ -105,6 +125,16 @@
   color: #fff7ea;
 }
 
+.nav-button--exam {
+  background: rgba(58, 130, 88, 0.15);
+  color: #1f5c38;
+}
+
+.nav-button--exam.active {
+  background: linear-gradient(135deg, #1f5c38, #3a8258);
+  color: #fff;
+}
+
 .nav-button:disabled,
 .switch-button:disabled,
 .primary-button:disabled,
@@ -123,7 +153,7 @@
 .home-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .home-hero-copy h1,
@@ -134,7 +164,7 @@
 
 .hero-copy {
   max-width: 42rem;
-  margin-top: 1rem;
+  margin-top: 0.4rem;
   color: #435465;
 }
 
@@ -166,10 +196,89 @@
   font-size: 1.45rem;
 }
 
+.home-phases {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.home-phase {
+  border: 1px solid rgba(26, 43, 60, 0.12);
+  border-radius: 28px;
+  background: rgba(255, 252, 245, 0.9);
+  box-shadow: 0 20px 60px rgba(26, 43, 60, 0.08);
+  padding: 1.75rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.home-phase--build {
+  border-color: rgba(70, 100, 200, 0.2);
+  background: rgba(248, 250, 255, 0.95);
+}
+
+.phase-badge--build {
+  background: rgba(70, 100, 200, 0.14);
+  color: #2a3f8c;
+}
+
+.home-phase--exam {
+  border-color: rgba(58, 130, 88, 0.25);
+  background: rgba(248, 255, 251, 0.95);
+}
+
+.phase-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.phase-badge {
+  flex-shrink: 0;
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.phase-badge--prepare {
+  background: rgba(255, 145, 77, 0.18);
+  color: #8c4a18;
+}
+
+.phase-badge--exam {
+  background: rgba(58, 130, 88, 0.16);
+  color: #1f5c38;
+}
+
+.phase-title {
+  margin: 0;
+  color: #14212d;
+  font-size: 1.15rem;
+}
+
+.phase-desc {
+  margin: 0.35rem 0 0;
+  color: #526373;
+}
+
 .home-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
+}
+
+.home-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.home-card-count {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: #6e7d8c;
 }
 
 .home-card {
@@ -441,9 +550,16 @@
   color: #29435c;
 }
 
+@media (max-width: 1100px) {
+  .home-phases {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media (max-width: 980px) {
   .home-hero,
-  .home-grid,
+  .home-phases,
+  .home-grid--two,
   .question-grid,
   .saved-quiz-grid,
   .question-form {

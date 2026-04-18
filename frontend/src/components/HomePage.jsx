@@ -14,25 +14,16 @@ export default function HomePage({
     <>
       <section className="home-hero">
         <div className="home-hero-copy">
-          <p className="eyebrow">Home</p>
-          <h1>Welcome to your quiz dashboard.</h1>
+          <p className="eyebrow">How it works</p>
+          <h1>Prepare. Then examine.</h1>
           <p className="hero-copy">
-            Manage your question bank, build quizzes with filters, save them for later,
-            and take tests from one simple workspace.
+            Build your question bank first, then generate quizzes from those questions and test yourself.
           </p>
-          <div className="hero-actions">
-            <button className="primary-button" type="button" onClick={onCreateQuiz}>
-              Create Quiz
-            </button>
-            <button className="secondary-button" type="button" onClick={onBrowseQuestions}>
-              Browse Questions
-            </button>
-          </div>
         </div>
 
         <div className="home-stats">
           <article className="home-stat-card">
-            <span className="home-stat-label">Questions</span>
+            <span className="home-stat-label">Questions in bank</span>
             <strong>{questionCount}</strong>
           </article>
           <article className="home-stat-card">
@@ -41,91 +32,118 @@ export default function HomePage({
           </article>
           <article className="home-stat-card">
             <span className="home-stat-label">Latest score</span>
-            <strong>{quizResult ? `${quizResult.score}/${quizResult.total}` : 'No result yet'}</strong>
+            <strong>{quizResult ? `${quizResult.score}/${quizResult.total}` : '—'}</strong>
           </article>
         </div>
       </section>
 
-      <section className="home-grid">
-        <article className="home-card">
-          <p className="summary-label">Question bank</p>
-          <h3>View all questions</h3>
-          <p>Check what is already stored and filter by category when needed.</p>
-          <div className="home-card-actions">
-            <button className="primary-button" type="button" onClick={onBrowseQuestions}>
-              Open Questions
-            </button>
+      <div className="home-phases">
+        {/* Step 1: Question Bank */}
+        <section className="home-phase home-phase--prepare">
+          <div className="phase-header">
+            <span className="phase-badge phase-badge--prepare">Step 1</span>
+            <div>
+              <h2 className="phase-title">Question Bank</h2>
+              <p className="phase-desc">Add and manage your questions.</p>
+            </div>
           </div>
-        </article>
 
-        <article className="home-card">
-          <p className="summary-label">Add content</p>
-          <h3>Add a new question</h3>
-          <p>Insert a new question into PostgreSQL so it can be reused in quizzes later.</p>
-          <div className="home-card-actions">
-            <button className="primary-button" type="button" onClick={onAddQuestion}>
-              Add Question
-            </button>
-          </div>
-        </article>
+          <article className="home-card">
+            <p className="summary-label">Question bank</p>
+            <h3>Browse &amp; manage questions</h3>
+            <p>View all stored questions, filter by category, add new ones, or delete old ones.</p>
+            <div className="home-card-actions">
+              <button className="primary-button" type="button" onClick={onBrowseQuestions}>
+                Open Question Bank
+              </button>
+              <button className="secondary-button" type="button" onClick={onAddQuestion}>
+                Add Question
+              </button>
+            </div>
+            <span className="home-card-count">{questionCount} questions stored</span>
+          </article>
+        </section>
 
-        <article className="home-card">
-          <p className="summary-label">Quiz builder</p>
-          <h3>Create a new quiz</h3>
-          <p>Choose category, difficulty, and question count, then save the quiz.</p>
-          <div className="home-card-actions">
-            <button className="primary-button" type="button" onClick={onCreateQuiz}>
-              Create Quiz
-            </button>
+        {/* Step 2: Create Your Quiz */}
+        <section className="home-phase home-phase--build">
+          <div className="phase-header">
+            <span className="phase-badge phase-badge--build">Step 2</span>
+            <div>
+              <h2 className="phase-title">Create Your Quiz</h2>
+              <p className="phase-desc">Build and save quizzes from your questions.</p>
+            </div>
           </div>
-        </article>
 
-        <article className="home-card">
-          <p className="summary-label">Saved quizzes</p>
-          <h3>Open previous quizzes</h3>
-          <p>Return to a quiz later, reopen it, or clean up old quiz records.</p>
-          <div className="home-card-actions">
-            <button className="primary-button" type="button" onClick={onOpenSavedQuizzes}>
-              Open Saved Quizzes
-            </button>
-          </div>
-        </article>
+          <article className="home-card">
+            <p className="summary-label">Quiz builder</p>
+            <h3>Create a new quiz</h3>
+            <p>Filter by category and difficulty to generate a quiz from your question bank.</p>
+            <div className="home-card-actions">
+              <button className="primary-button" type="button" onClick={onCreateQuiz}>
+                Create Quiz
+              </button>
+            </div>
+          </article>
 
-        <article className="home-card">
-          <p className="summary-label">Take test</p>
-          <h3>{activeQuiz ? activeQuiz.title : 'No quiz selected yet'}</h3>
-          <p>
-            {activeQuiz
-              ? 'Continue the currently opened quiz and submit your answers.'
-              : 'Choose a saved quiz first, then return here to start the test.'}
-          </p>
-          <div className="home-card-actions">
-            <button className="primary-button" type="button" onClick={onTakeQuiz}>
-              {activeQuiz ? 'Take Quiz' : 'Choose Quiz'}
-            </button>
-          </div>
-        </article>
+          <article className="home-card">
+            <p className="summary-label">Library</p>
+            <h3>Saved quizzes</h3>
+            <p>Reopen or delete previously saved quizzes.</p>
+            <div className="home-card-actions">
+              <button className="primary-button" type="button" onClick={onOpenSavedQuizzes}>
+                Open Library
+              </button>
+              <span className="home-card-count">{savedQuizCount} saved</span>
+            </div>
+          </article>
+        </section>
 
-        <article className="home-card">
-          <p className="summary-label">Results</p>
-          <h3>{quizResult ? quizResult.title : 'No result available yet'}</h3>
-          <p>
-            {quizResult
-              ? `Your latest score is ${quizResult.score} out of ${quizResult.total}.`
-              : 'Once you submit a quiz, the result will appear here for quick access.'}
-          </p>
-          <div className="home-card-actions">
-            <button
-              className="primary-button"
-              type="button"
-              onClick={onViewResult}
-              disabled={!quizResult}
-            >
-              View Result
-            </button>
+        {/* Step 3: Take Exam */}
+        <section className="home-phase home-phase--exam">
+          <div className="phase-header">
+            <span className="phase-badge phase-badge--exam">Step 3</span>
+            <div>
+              <h2 className="phase-title">Take Exam</h2>
+              <p className="phase-desc">Sit the quiz and see your score.</p>
+            </div>
           </div>
-        </article>
-      </section>
+
+          <article className="home-card">
+            <p className="summary-label">Take test</p>
+            <h3>{activeQuiz ? activeQuiz.title : 'No quiz selected'}</h3>
+            <p>
+              {activeQuiz
+                ? 'A quiz is ready — answer every question and submit.'
+                : 'Create or open a saved quiz first, then sit the exam here.'}
+            </p>
+            <div className="home-card-actions">
+              <button className="primary-button" type="button" onClick={onTakeQuiz}>
+                {activeQuiz ? 'Take Quiz' : 'Choose Quiz'}
+              </button>
+            </div>
+          </article>
+
+          <article className="home-card">
+            <p className="summary-label">Results</p>
+            <h3>{quizResult ? `${quizResult.score} / ${quizResult.total}` : 'No result yet'}</h3>
+            <p>
+              {quizResult
+                ? `Latest: ${quizResult.title}`
+                : 'Submit a quiz to see your score here.'}
+            </p>
+            <div className="home-card-actions">
+              <button
+                className="primary-button"
+                type="button"
+                onClick={onViewResult}
+                disabled={!quizResult}
+              >
+                View Result
+              </button>
+            </div>
+          </article>
+        </section>
+      </div>
     </>
   )
 }

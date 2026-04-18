@@ -30,9 +30,9 @@ function getSectionMeta(currentView, activeQuiz) {
   switch (currentView) {
     case 'questions':
       return {
-        eyebrow: 'Question Bank',
-        title: 'Browse Questions',
-        note: 'Review, filter, refresh, and delete questions from your PostgreSQL question bank.',
+        eyebrow: 'Prepare — Step 1',
+        title: 'Question Bank',
+        note: 'Review, filter, and delete questions. Use "+ Add Question" to grow your bank.',
       }
     case 'add':
       return {
@@ -319,20 +319,21 @@ function App() {
           >
             Home
           </button>
+
+          <span className="nav-divider" aria-hidden="true" />
+          <span className="nav-group-label">Step 1</span>
+
           <button
-            className={currentView === 'questions' ? 'nav-button active' : 'nav-button'}
+            className={currentView === 'questions' || currentView === 'add' ? 'nav-button active' : 'nav-button'}
             onClick={() => setCurrentView('questions')}
             type="button"
           >
-            Questions
+            Question Bank
           </button>
-          <button
-            className={currentView === 'add' ? 'nav-button active' : 'nav-button'}
-            onClick={() => setCurrentView('add')}
-            type="button"
-          >
-            Add Question
-          </button>
+
+          <span className="nav-divider" aria-hidden="true" />
+          <span className="nav-group-label">Step 2</span>
+
           <button
             className={currentView === 'createQuiz' ? 'nav-button active' : 'nav-button'}
             onClick={() => setCurrentView('createQuiz')}
@@ -347,8 +348,12 @@ function App() {
           >
             Saved Quizzes
           </button>
+
+          <span className="nav-divider" aria-hidden="true" />
+          <span className="nav-group-label">Step 3</span>
+
           <button
-            className={currentView === 'takeQuiz' ? 'nav-button active' : 'nav-button'}
+            className={currentView === 'takeQuiz' ? 'nav-button nav-button--exam active' : 'nav-button nav-button--exam'}
             onClick={handleOpenTakeQuiz}
             type="button"
           >
@@ -412,6 +417,13 @@ function App() {
                   onClick={() => setRefreshKey((current) => current + 1)}
                 >
                   Refresh
+                </button>
+                <button
+                  className="primary-button"
+                  type="button"
+                  onClick={() => setCurrentView('add')}
+                >
+                  + Add Question
                 </button>
               </div>
               {isLoading ? <p className="feedback">Loading questions from the API...</p> : null}
