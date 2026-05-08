@@ -68,4 +68,6 @@ jobs:
 
     steps:
       - name: Deploy to Vercel
-        run: curl -X POST ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: curl -X POST --fail --silent --show-error "$VERCEL_DEPLOY_HOOK"
