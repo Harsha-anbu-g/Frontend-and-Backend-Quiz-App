@@ -8,5 +8,8 @@ jobs:
   hello:
     runs-on: ubuntu-latest
     steps:
-      - name: Say hello
-        run: echo "The pipeline is working!"
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Show what files are here
+        run: ls
