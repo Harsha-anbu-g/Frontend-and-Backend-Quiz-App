@@ -4,6 +4,15 @@ A full-stack quiz application built with **Spring Boot** and **React**, deployed
 
 **Live:** https://quiz-studio.vercel.app
 
+### Demo Credentials
+
+| Role    | Username   | Password  |
+| ------- | ---------- | --------- |
+| Teacher | teach_ram  | 1234567   |
+| Student | stud_ravi  | 12345     |
+
+Or click **Guest Login** on the login page for instant access with full teacher privileges.
+
 ---
 
 ## Tech Stack
