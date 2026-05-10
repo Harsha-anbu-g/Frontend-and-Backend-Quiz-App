@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { login } from '../api/auth'
+import { login, loginAsGuest } from '../api/auth'
 
 export default function LoginPage({ onLogin, onGoToRegister }) {
   const [username, setUsername] = useState('')
@@ -69,6 +69,30 @@ export default function LoginPage({ onLogin, onGoToRegister }) {
             {isLoading ? 'Signing in…' : 'Sign In'}
           </button>
         </form>
+
+        <div className="auth-divider">
+          <span>or</span>
+        </div>
+
+        <button
+          type="button"
+          className="guest-button"
+          disabled={isLoading}
+          onClick={async () => {
+            setError('')
+            setIsLoading(true)
+            try {
+              const role = await loginAsGuest()
+              onLogin(role)
+            } catch (err) {
+              setError(err.message)
+            } finally {
+              setIsLoading(false)
+            }
+          }}
+        >
+          Continue as Guest
+        </button>
 
         <p className="auth-switch">
           New user?{' '}

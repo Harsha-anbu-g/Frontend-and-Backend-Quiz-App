@@ -28,6 +28,11 @@ public class AuthController {
         return authService.login(request.username(), request.password());
     }
 
+    @GetMapping("/guest")
+    public ResponseEntity<String> guest() {
+        return authService.guestLogin();
+    }
+
     public record RegisterRequest(@NotBlank String username, @NotBlank String password, @NotNull Role role) {}
     public record LoginRequest(@NotBlank String username, @NotBlank String password) {}
 }
