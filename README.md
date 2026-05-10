@@ -4,12 +4,22 @@ A full-stack quiz application built with **Spring Boot** and **React**, deployed
 
 **Live:** https://quiz-studio.vercel.app
 
+### Demo Credentials
+
+| Role    | Username   | Password  |
+| ------- | ---------- | --------- |
+| Teacher | teach_ram  | 1234567   |
+| Student | stud_ravi  | 12345     |
+
+Or click **Guest Login** on the login page for instant access with full teacher privileges.
+
 ---
 
 ## Tech Stack
 
 - **Java 17**
 - **Spring Boot 3.5.7**
+- **Spring Security + JWT** — Authentication and authorization
 - **Spring Data JPA** — ORM and database access
 - **PostgreSQL** — Relational database
 - **React + Vite** — Frontend UI
@@ -24,6 +34,7 @@ A full-stack quiz application built with **Spring Boot** and **React**, deployed
 src/main/java/com/example/quizapp/
 ├── QuizappApplication.java          # Application entry point
 ├── controller/
+│   ├── AuthController.java          # REST endpoints for login/register/guest
 │   ├── QuestionController.java      # REST endpoints for questions
 │   └── QuizController.java          # REST endpoints for quizzes
 ├── dao/
@@ -34,14 +45,25 @@ src/main/java/com/example/quizapp/
 │   ├── QuestionWrapper.java         # DTO — hides correct answer from users
 │   ├── Quiz.java                    # Quiz entity (JPA)
 │   └── Response.java                # DTO — user's answer submission
+├── security/
+│   ├── JwtAuthFilter.java           # JWT request filter
+│   ├── JwtUtil.java                 # JWT token generation and validation
+│   ├── SecurityConfig.java          # Spring Security configuration
+│   └── WebConfig.java               # CORS configuration
 └── service/
     ├── QuestionService.java         # Business logic for questions
     └── QuizService.java             # Business logic for quizzes
 
 frontend/
 ├── src/App.jsx                     # Main frontend flow
-├── src/api/                        # Fetch helpers for backend calls
-├── src/components/                 # Simple UI components
+├── src/api/
+│   ├── auth.js                     # Login, register, guest, token helpers
+│   ├── questions.js                # Question API calls
+│   └── quiz.js                     # Quiz API calls
+├── src/components/
+│   ├── LoginPage.jsx               # Login + guest access UI
+│   ├── RegisterPage.jsx            # New account registration UI
+│   └── ...                        # Question, quiz, and result components
 └── package.json                    # Frontend dependencies and scripts
 ```
 
@@ -70,6 +92,49 @@ frontend/
 | id        | Integer         | Auto-generated primary key             |
 | title     | String          | Quiz title                             |
 | questions | List\<Question> | Many-to-Many relationship to questions |
+
+---
+
+## Authentication
+
+The app uses **JWT (JSON Web Token)** for authentication. All quiz and question endpoints require a valid Bearer token.
+
+### Auth Endpoints (`/api/auth`)
+
+| Method | Endpoint             | Description                          |
+| ------ | -------------------- | ------------------------------------ |
+| POST   | `/api/auth/register` | Register a new user (teacher/student)|
+| POST   | `/api/auth/login`    | Login and receive a JWT              |
+| GET    | `/api/auth/guest`    | Get a guest token with full access   |
+
+#### Register — `POST /api/auth/register`
+
+```json
+{
+  "username": "alice",
+  "password": "secret",
+  "role": "TEACHER"
+}
+```
+
+#### Login — `POST /api/auth/login`
+
+```json
+{
+  "username": "alice",
+  "password": "secret"
+}
+```
+
+**Response:** JWT token as plain text. Include it in subsequent requests:
+
+```
+Authorization: Bearer <token>
+```
+
+#### Guest Login — `GET /api/auth/guest`
+
+Returns a JWT with full teacher-level access. No credentials required — for demo and exploration.
 
 ---
 
@@ -212,20 +277,24 @@ Returns questions wrapped in `QuestionWrapper` (without the correct answer), so 
 The backend connects to PostgreSQL. It now supports environment variables with local fallbacks:
 
 ```properties
-spring.datasource.driver-class-name=org.postgresql.Driver
 spring.datasource.url=${DB_URL:jdbc:postgresql://localhost:5432/postgres}
 spring.datasource.username=${DB_USERNAME:postgres}
-spring.datasource.password=${DB_PASSWORD:0000}
+spring.datasource.password=${DB_PASSWORD}
 spring.jpa.hibernate.ddl-auto=update
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+jwt.secret=${JWT_SECRET}
+jwt.expiration=86400000
 ```
 
-This means:
+Required environment variables:
 
-- local development can still use the default values
-- deployment can override them with `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD`
+| Variable       | Description                                      |
+| -------------- | ------------------------------------------------ |
+| `DB_URL`       | PostgreSQL JDBC URL (defaults to localhost:5432) |
+| `DB_USERNAME`  | Database username (defaults to `postgres`)       |
+| `DB_PASSWORD`  | Database password — **required, no default**     |
+| `JWT_SECRET`   | Secret key for signing JWTs — **required**       |
 
-> Hibernate's `ddl-auto=update` will automatically create/update tables based on the entity classes.
+> Hibernate's `ddl-auto=update` will automatically create/update tables based on entity classes.
 
 ---
 
@@ -240,7 +309,8 @@ This means:
 
 2. **Set up PostgreSQL**
    - Create or use an existing PostgreSQL database.
-   - Either use the default local values or set `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD`.
+   - Set the required environment variables: `DB_PASSWORD` and `JWT_SECRET`.
+   - Optionally override `DB_URL` and `DB_USERNAME` (defaults to localhost:5432/postgres).
 
 3. **Run the backend**
 

@@ -37,6 +37,9 @@ jobs:
           cache: 'maven'
 
       - name: Run backend tests
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: ./mvnw test
 
   frontend:
