@@ -12,7 +12,7 @@ function authHeaders(extra = {}) {
 }
 
 function handle401(response) {
-  if (response.status === 401) {
+  if (response.status === 401 && getToken()) {
     clearToken()
     window.dispatchEvent(new Event('auth:logout'))
   }
