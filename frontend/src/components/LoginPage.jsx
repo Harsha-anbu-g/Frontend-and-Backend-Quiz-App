@@ -39,6 +39,7 @@ export default function LoginPage({ onLogin, onGoToRegister }) {
               onChange={(e) => setUsername(e.target.value)}
               required
               autoFocus
+              autoComplete="username"
             />
           </label>
 
@@ -49,6 +50,7 @@ export default function LoginPage({ onLogin, onGoToRegister }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoComplete="current-password"
             />
           </label>
 
