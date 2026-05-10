@@ -63,6 +63,7 @@ class AuthServiceTest {
         var response = authService.login("unknown", "password");
 
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        assertEquals("Invalid credentials", response.getBody());
     }
 
     @Test
