@@ -25,9 +25,11 @@ export async function createQuiz(payload) {
     method: 'POST',
     headers: authHeaders(),
   }))
-  const data = await response.json()
-  if (!response.ok) throw new Error(data.message ?? `Failed to create quiz (${response.status})`)
-  return data
+  if (!response.ok) {
+    const text = await response.text()
+    throw new Error(text || `Failed to create quiz (${response.status})`)
+  }
+  return response.json()
 }
 
 export async function fetchAllQuizzes() {
