@@ -7,11 +7,14 @@ import {
   fetchQuestionsByCategory,
 } from './api/questions'
 import { createQuiz, deleteQuiz, fetchAllQuizzes } from './api/quiz'
+import { clearToken, getRole, isLoggedIn } from './api/auth'
 import CreateQuizForm from './components/CreateQuizForm'
 import HomePage from './components/HomePage'
+import LoginPage from './components/LoginPage'
 import QuestionForm from './components/QuestionForm'
 import QuestionList from './components/QuestionList'
 import QuizPlayer from './components/QuizPlayer'
+import RegisterPage from './components/RegisterPage'
 import SavedQuizList from './components/SavedQuizList'
 
 function normalizeCategory(category) {
@@ -76,6 +79,8 @@ function getSectionMeta(currentView, activeQuiz) {
 }
 
 function App() {
+  const [authView, setAuthView] = useState(() => isLoggedIn() ? null : 'login')
+  const [userRole, setUserRole] = useState(() => getRole())
   const [currentView, setCurrentView] = useState(
     () => window.history.state?.view ?? 'home'
   )
@@ -99,6 +104,17 @@ function App() {
   const [deletingQuizId, setDeletingQuizId] = useState(null)
   const [deletingQuestionId, setDeletingQuestionId] = useState(null)
 
+  function handleLogin(role) {
+    setUserRole(role)
+    setAuthView(null)
+  }
+
+  function handleLogout() {
+    clearToken()
+    setUserRole(null)
+    setAuthView('login')
+  }
+
   function navigateTo(view) {
     window.history.pushState({ view }, '', `#${view}`)
     setCurrentView(view)
@@ -113,6 +129,15 @@ function App() {
 
     window.addEventListener('popstate', handlePopState)
     return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
+
+  useEffect(() => {
+    function onAuthLogout() {
+      setUserRole(null)
+      setAuthView('login')
+    }
+    window.addEventListener('auth:logout', onAuthLogout)
+    return () => window.removeEventListener('auth:logout', onAuthLogout)
   }, [])
 
   useEffect(() => {
@@ -318,6 +343,14 @@ function App() {
 
   const sectionMeta = getSectionMeta(currentView, activeQuiz)
 
+  if (authView === 'login') {
+    return <LoginPage onLogin={handleLogin} onGoToRegister={() => setAuthView('register')} />
+  }
+
+  if (authView === 'register') {
+    return <RegisterPage onRegistered={() => setAuthView('login')} onGoToLogin={() => setAuthView('login')} />
+  }
+
   return (
     <main className="app-shell">
       <header className="site-header">
@@ -338,30 +371,32 @@ function App() {
             Home
           </button>
 
+          {userRole === 'ROLE_TEACHER' && (
+            <>
+              <span className="nav-divider" aria-hidden="true" />
+              <span className="nav-group-label">Step 1</span>
+              <button
+                className={currentView === 'questions' || currentView === 'add' ? 'nav-button active' : 'nav-button'}
+                onClick={() => navigateTo('questions')}
+                type="button"
+              >
+                Question Bank
+              </button>
+
+              <span className="nav-divider" aria-hidden="true" />
+              <span className="nav-group-label">Step 2</span>
+              <button
+                className={currentView === 'createQuiz' ? 'nav-button active' : 'nav-button'}
+                onClick={() => navigateTo('createQuiz')}
+                type="button"
+              >
+                Create Quiz
+              </button>
+            </>
+          )}
+
           <span className="nav-divider" aria-hidden="true" />
-          <span className="nav-group-label">Step 1</span>
-
-          <button
-            className={currentView === 'questions' || currentView === 'add' ? 'nav-button active' : 'nav-button'}
-            onClick={() => navigateTo('questions')}
-            type="button"
-          >
-            Question Bank
-          </button>
-
-          <span className="nav-divider" aria-hidden="true" />
-          <span className="nav-group-label">Step 2</span>
-
-          <button
-            className={currentView === 'createQuiz' ? 'nav-button active' : 'nav-button'}
-            onClick={() => navigateTo('createQuiz')}
-            type="button"
-          >
-            Create Quiz
-          </button>
-
-          <span className="nav-divider" aria-hidden="true" />
-          <span className="nav-group-label">Step 3</span>
+          {userRole === 'ROLE_TEACHER' && <span className="nav-group-label">Step 3</span>}
 
           <button
             className={currentView === 'savedQuizzes' || currentView === 'takeQuiz' ? 'nav-button nav-button--exam active' : 'nav-button nav-button--exam'}
@@ -378,6 +413,15 @@ function App() {
           >
             Result
           </button>
+
+          <button
+            className="nav-button"
+            type="button"
+            onClick={handleLogout}
+            style={{ marginLeft: 'auto', color: '#c47a20' }}
+          >
+            Logout
+          </button>
         </nav>
       </header>
 
@@ -389,6 +433,7 @@ function App() {
           savedQuizCount={savedQuizzes.length}
           activeQuiz={activeQuiz}
           quizResult={quizResult}
+          userRole={userRole}
           onBrowseQuestions={() => navigateTo('questions')}
           onAddQuestion={() => navigateTo('add')}
           onCreateQuiz={() => navigateTo('createQuiz')}
@@ -406,7 +451,7 @@ function App() {
             <span className="section-note">{sectionMeta.note}</span>
           </div>
 
-          {currentView === 'questions' ? (
+          {currentView === 'questions' && userRole === 'ROLE_TEACHER' ? (
             <>
               <div className="toolbar">
                 <label className="toolbar-field">
@@ -449,11 +494,11 @@ function App() {
             </>
           ) : null}
 
-          {currentView === 'add' ? (
+          {currentView === 'add' && userRole === 'ROLE_TEACHER' ? (
             <QuestionForm onSubmit={handleCreateQuestion} isSubmitting={isSubmitting} />
           ) : null}
 
-          {currentView === 'createQuiz' ? (
+          {currentView === 'createQuiz' && userRole === 'ROLE_TEACHER' ? (
             <CreateQuizForm
               categoryOptions={availableCategories.filter((category) => category !== 'All')}
               difficultyOptions={availableDifficultyLevels}
