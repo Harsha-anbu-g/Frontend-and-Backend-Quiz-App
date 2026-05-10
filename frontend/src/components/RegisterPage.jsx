@@ -40,6 +40,7 @@ export default function RegisterPage({ onRegistered, onGoToLogin }) {
               onChange={(e) => setUsername(e.target.value)}
               required
               autoFocus
+              autoComplete="username"
             />
           </label>
 
@@ -50,6 +51,7 @@ export default function RegisterPage({ onRegistered, onGoToLogin }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoComplete="new-password"
             />
           </label>
 
