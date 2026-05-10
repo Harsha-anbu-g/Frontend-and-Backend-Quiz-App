@@ -149,7 +149,12 @@ Any API call returns 401
 
 ## Styling
 
-Login and Register pages use the same purple theme, fonts, and component style as the existing app. No new design system or CSS framework introduced.
+Login and Register pages use the same warm cream theme, fonts, and component style as the existing app:
+- Background: `#fff9ef` → `#f5efe5` with orange/blue radial accents (from `index.css`)
+- Text: `#203040`
+- Font: `Satoshi`, `Avenir Next`, `Segoe UI`
+
+No new design system or CSS framework introduced.
 
 ---
 
