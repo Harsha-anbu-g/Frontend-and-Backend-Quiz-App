@@ -13,6 +13,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    // TEMPORARY STUB — permits all requests during development.
+    // Replaced with real role-based rules in Task 7 before merging.
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
