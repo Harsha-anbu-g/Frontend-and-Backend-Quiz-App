@@ -40,4 +40,8 @@ public class AuthService {
                 .map(user -> ResponseEntity.ok(jwtUtil.generateToken(user.getUsername(), user.getRole())))
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials"));
     }
+
+    public ResponseEntity<String> guestLogin() {
+        return ResponseEntity.ok(jwtUtil.generateToken("guest", Role.ROLE_TEACHER));
+    }
 }

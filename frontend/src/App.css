@@ -869,3 +869,43 @@
 .auth-portfolio-link:hover {
   text-decoration: underline;
 }
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #aaa;
+  font-size: 0.8rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e5e5;
+}
+
+.guest-button {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  color: #374151;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.guest-button:hover:not(:disabled) {
+  border-color: #c47a20;
+  background: #fffaf3;
+  color: #c47a20;
+}
+
+.guest-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

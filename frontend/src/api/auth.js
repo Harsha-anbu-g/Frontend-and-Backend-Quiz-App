@@ -45,6 +45,16 @@ export async function login(username, password) {
   return getRole()
 }
 
+export async function loginAsGuest() {
+  const response = await fetch(`${API_BASE_URL}/api/auth/guest`)
+  if (!response.ok) {
+    throw new Error('Guest login failed')
+  }
+  const token = await response.text()
+  saveToken(token)
+  return getRole()
+}
+
 export async function register(username, password, role) {
   const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
     method: 'POST',
