@@ -2,7 +2,6 @@ package com.example.quizapp.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,11 +38,7 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/quiz/all", "/quiz/get/**").hasAnyRole("TEACHER", "STUDENT")
-                .requestMatchers(HttpMethod.POST, "/quiz/submit/**").hasAnyRole("TEACHER", "STUDENT")
-                .requestMatchers("/quiz/**").hasRole("TEACHER")
-                .requestMatchers("/Question/**").hasRole("TEACHER")
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
             )
             .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
 
