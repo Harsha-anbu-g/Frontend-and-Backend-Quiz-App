@@ -113,6 +113,7 @@ function App() {
     clearToken()
     setUserRole(null)
     setAuthView('login')
+    setCurrentView('home')
   }
 
   function navigateTo(view) {
@@ -133,14 +134,17 @@ function App() {
 
   useEffect(() => {
     function onAuthLogout() {
+      clearToken()
       setUserRole(null)
       setAuthView('login')
+      setCurrentView('home')
     }
     window.addEventListener('auth:logout', onAuthLogout)
     return () => window.removeEventListener('auth:logout', onAuthLogout)
   }, [])
 
   useEffect(() => {
+    if (authView !== null) return
     let isMounted = true
 
     async function loadQuestions() {
@@ -194,9 +198,10 @@ function App() {
     return () => {
       isMounted = false
     }
-  }, [refreshKey, selectedCategory])
+  }, [refreshKey, selectedCategory, authView])
 
   useEffect(() => {
+    if (authView !== null) return
     let isMounted = true
 
     async function loadSavedQuizzes() {
@@ -224,7 +229,7 @@ function App() {
     return () => {
       isMounted = false
     }
-  }, [quizLibraryRefreshKey])
+  }, [quizLibraryRefreshKey, authView])
 
   async function handleCreateQuestion(question) {
     setIsSubmitting(true)
@@ -545,13 +550,15 @@ function App() {
                 <h3>
                   You scored {quizResult.score} out of {quizResult.total}
                 </h3>
-                <button
-                  className="primary-button"
-                  type="button"
-                  onClick={() => navigateTo('createQuiz')}
-                >
-                  Create another quiz
-                </button>
+                {userRole === 'ROLE_TEACHER' && (
+                  <button
+                    className="primary-button"
+                    type="button"
+                    onClick={() => navigateTo('createQuiz')}
+                  >
+                    Create another quiz
+                  </button>
+                )}
               </article>
             ) : (
               <article className="result-card">
