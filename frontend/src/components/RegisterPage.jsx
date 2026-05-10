@@ -4,12 +4,17 @@ import { register } from '../api/auth'
 export default function RegisterPage({ onRegistered, onGoToLogin }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [role, setRole] = useState('ROLE_STUDENT')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   async function handleSubmit(event) {
     event.preventDefault()
+    if (password !== confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
     setError('')
     setIsLoading(true)
     try {
@@ -50,6 +55,17 @@ export default function RegisterPage({ onRegistered, onGoToLogin }) {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="new-password"
+            />
+          </label>
+
+          <label className="auth-field">
+            <span>Re-enter Password</span>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
               autoComplete="new-password"
             />
