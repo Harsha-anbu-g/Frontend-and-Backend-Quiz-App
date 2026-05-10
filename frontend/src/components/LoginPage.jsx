@@ -30,6 +30,15 @@ export default function LoginPage({ onLogin, onGoToRegister }) {
           <p className="brand-copy">Sign in to continue.</p>
         </div>
 
+        <div className="auth-steps">
+          <p className="auth-steps-label">How it works</p>
+          <ol className="auth-steps-list">
+            <li>Register as a <strong>Teacher</strong> or <strong>Student</strong></li>
+            <li>Teachers create quizzes &amp; manage questions</li>
+            <li>Students browse and attempt quizzes</li>
+          </ol>
+        </div>
+
         <form onSubmit={handleSubmit} className="auth-form">
           <label className="auth-field">
             <span>Username</span>
@@ -62,11 +71,24 @@ export default function LoginPage({ onLogin, onGoToRegister }) {
         </form>
 
         <p className="auth-switch">
-          Don&apos;t have an account?{' '}
+          New user?{' '}
           <button type="button" className="link-button" onClick={onGoToRegister}>
-            Register
+            Create an account →
           </button>
         </p>
+
+        <div className="auth-footer">
+          <p>Built by{' '}
+            <a
+              href="https://portfolioharsha.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="auth-portfolio-link"
+            >
+              Harshavardhan
+            </a>
+          </p>
+        </div>
       </div>
     </main>
   )
