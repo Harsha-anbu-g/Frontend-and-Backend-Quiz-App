@@ -818,6 +818,11 @@
   text-decoration: underline;
 }
 
+.auth-card .brand-block {
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
 .auth-steps {
   background: #fff9ef;
   border: 1px solid rgba(196, 122, 32, 0.2);
