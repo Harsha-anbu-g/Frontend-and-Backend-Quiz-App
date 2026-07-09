@@ -1,12 +1,60 @@
+/* ============================================================
+   Exam Studio — design tokens & base
+   Ink-forward product system: crisp warm-white paper, near-black
+   actions, a confident grotesque, clay kept only as a sharp accent.
+   ============================================================ */
+
 :root {
-  font-family: 'Satoshi', 'Avenir Next', 'Segoe UI', sans-serif;
-  line-height: 1.5;
+  /* — Paper: cleaner warm-white, less cream — */
+  --paper: #efece4;
+  --paper-deep: #e4e0d6;
+  --surface: #ffffff;
+  --surface-inset: #f4f1ea;
+
+  /* — Ink (warm near-black → muted) — */
+  --ink: #1a180f;
+  --ink-2: #55514a;
+  --ink-3: #837e72;
+
+  /* — Hairlines — */
+  --line: rgba(26, 24, 15, 0.16);
+  --line-soft: rgba(26, 24, 15, 0.09);
+
+  /* — Clay: now a sharp ACCENT only (tags, active state, marks) — */
+  --clay: #b5542f;
+  --clay-deep: #97431f;
+  --clay-tint: rgba(181, 84, 47, 0.1);
+  --clay-line: rgba(181, 84, 47, 0.34);
+
+  /* — Sage: the exam / correct semantic — */
+  --sage: #4e6b4a;
+  --sage-deep: #3c5639;
+  --sage-tint: rgba(78, 107, 74, 0.12);
+
+  /* — Danger — */
+  --danger: #a93b2b;
+  --danger-tint: rgba(169, 59, 43, 0.1);
+
+  /* — Radius scale: crisper, low-radius — */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+
+  /* — Elevation: mostly borders, whisper-quiet shadows — */
+  --shadow-sm: 0 1px 2px rgba(26, 24, 15, 0.05);
+  --shadow-md: 0 16px 44px -26px rgba(26, 24, 15, 0.45);
+
+  /* — Type roles: grotesque display + grotesque body + mono data — */
+  --font-display: 'Bricolage Grotesque', 'Hanken Grotesk', sans-serif;
+  --font-body: 'Hanken Grotesk', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  font-family: var(--font-body);
+  line-height: 1.55;
   font-weight: 400;
-  color: #203040;
-  background:
-    radial-gradient(circle at top left, rgba(255, 177, 89, 0.38), transparent 25%),
-    radial-gradient(circle at right center, rgba(76, 141, 190, 0.18), transparent 30%),
-    linear-gradient(180deg, #fff9ef 0%, #f5efe5 100%);
+  color: var(--ink);
+  color-scheme: light;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -20,11 +68,12 @@
 html,
 body,
 #root {
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 body {
   margin: 0;
+  background-color: var(--paper);
 }
 
 button,
@@ -32,4 +81,27 @@ input,
 textarea,
 select {
   font: inherit;
+  color: inherit;
+}
+
+/* Accessible, on-brand focus ring */
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--clay-tint);
+  color: var(--clay-deep);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
