@@ -1,32 +1,32 @@
 /* ============================================================
    Exam Studio — design tokens & base
-   Anthropic-authentic editorial system: warm ivory paper,
-   hairline rules, clay accent, serif + grotesque + mono.
+   Ink-forward product system: crisp warm-white paper, near-black
+   actions, a confident grotesque, clay kept only as a sharp accent.
    ============================================================ */
 
 :root {
-  /* — Warm ivory paper palette — */
-  --paper: #f1eee6;
-  --paper-deep: #e8e4d9;
-  --surface: #fbfaf6;
-  --surface-inset: #f5f2ea;
+  /* — Paper: cleaner warm-white, less cream — */
+  --paper: #efece4;
+  --paper-deep: #e4e0d6;
+  --surface: #ffffff;
+  --surface-inset: #f4f1ea;
 
   /* — Ink (warm near-black → muted) — */
-  --ink: #211e17;
-  --ink-2: #57534a;
-  --ink-3: #837d70;
+  --ink: #1a180f;
+  --ink-2: #55514a;
+  --ink-3: #837e72;
 
   /* — Hairlines — */
-  --line: rgba(33, 30, 23, 0.14);
-  --line-soft: rgba(33, 30, 23, 0.08);
+  --line: rgba(26, 24, 15, 0.16);
+  --line-soft: rgba(26, 24, 15, 0.09);
 
-  /* — Clay: the single Anthropic accent — */
-  --clay: #b5542f;          /* action surfaces (white text ≥5:1) */
-  --clay-deep: #97431f;     /* clay text on ivory (≥5.5:1) */
+  /* — Clay: now a sharp ACCENT only (tags, active state, marks) — */
+  --clay: #b5542f;
+  --clay-deep: #97431f;
   --clay-tint: rgba(181, 84, 47, 0.1);
-  --clay-line: rgba(181, 84, 47, 0.32);
+  --clay-line: rgba(181, 84, 47, 0.34);
 
-  /* — Sage: the exam / success semantic — */
+  /* — Sage: the exam / correct semantic — */
   --sage: #4e6b4a;
   --sage-deep: #3c5639;
   --sage-tint: rgba(78, 107, 74, 0.12);
@@ -35,17 +35,17 @@
   --danger: #a93b2b;
   --danger-tint: rgba(169, 59, 43, 0.1);
 
-  /* — Radius scale (restrained, not pill) — */
-  --r-sm: 8px;
-  --r-md: 12px;
-  --r-lg: 18px;
+  /* — Radius scale: crisper, low-radius — */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
 
   /* — Elevation: mostly borders, whisper-quiet shadows — */
-  --shadow-sm: 0 1px 2px rgba(33, 30, 23, 0.04);
-  --shadow-md: 0 14px 40px -24px rgba(33, 30, 23, 0.4);
+  --shadow-sm: 0 1px 2px rgba(26, 24, 15, 0.05);
+  --shadow-md: 0 16px 44px -26px rgba(26, 24, 15, 0.45);
 
-  /* — Type roles — */
-  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  /* — Type roles: grotesque display + grotesque body + mono data — */
+  --font-display: 'Bricolage Grotesque', 'Hanken Grotesk', sans-serif;
   --font-body: 'Hanken Grotesk', -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
@@ -74,13 +74,6 @@ body,
 body {
   margin: 0;
   background-color: var(--paper);
-  /* Faint warm light from the top — barely there, keeps it flat/calm */
-  background-image: radial-gradient(
-    120% 80% at 50% -10%,
-    rgba(255, 255, 255, 0.6),
-    transparent 60%
-  );
-  background-attachment: fixed;
 }
 
 button,
@@ -91,16 +84,9 @@ select {
   color: inherit;
 }
 
-/* Editorial numerals where headings carry them */
-h1,
-h2,
-h3 {
-  font-feature-settings: 'ss01';
-}
-
 /* Accessible, on-brand focus ring */
 :where(a, button, input, textarea, select):focus-visible {
-  outline: 2px solid var(--clay);
+  outline: 2px solid var(--ink);
   outline-offset: 2px;
   border-radius: 4px;
 }

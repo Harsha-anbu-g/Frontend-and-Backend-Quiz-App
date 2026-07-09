@@ -96,10 +96,10 @@
   display: block;
   color: var(--ink);
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 700;
   font-size: 1.15rem;
   line-height: 1.15;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .brand-copy {
@@ -233,13 +233,13 @@
 }
 
 .primary-button {
-  background: var(--clay);
-  color: #fdf6f1;
+  background: var(--ink);
+  color: #f6f4ee;
   box-shadow: var(--shadow-sm);
 }
 
 .primary-button:hover:not(:disabled) {
-  background: var(--clay-deep);
+  background: #000;
 }
 
 .secondary-button,
@@ -317,13 +317,13 @@
   margin: 0;
   color: var(--ink);
   font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.015em;
+  font-weight: 600;
+  letter-spacing: -0.022em;
 }
 
 .home-hero-copy h1 {
-  font-size: clamp(2.1rem, 5vw, 3.3rem);
-  line-height: 1.04;
+  font-size: clamp(1.9rem, 4vw, 2.65rem);
+  line-height: 1.06;
   margin-top: 0.6rem;
 }
 
@@ -370,7 +370,7 @@
 .home-stat-card strong {
   color: var(--ink);
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.7rem;
   font-variant-numeric: tabular-nums;
 }
@@ -429,7 +429,7 @@
   margin: 0;
   color: var(--ink);
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.2rem;
 }
 
@@ -458,7 +458,7 @@
   margin: 0.4rem 0 0.2rem;
   color: var(--ink);
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.12rem;
 }
 
@@ -697,7 +697,7 @@
   margin: 0.7rem 0 0;
   color: var(--ink);
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.14rem;
   line-height: 1.35;
 }
