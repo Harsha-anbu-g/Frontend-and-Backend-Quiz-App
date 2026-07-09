@@ -1,12 +1,60 @@
+/* ============================================================
+   Exam Studio — design tokens & base
+   Anthropic-authentic editorial system: warm ivory paper,
+   hairline rules, clay accent, serif + grotesque + mono.
+   ============================================================ */
+
 :root {
-  font-family: 'Satoshi', 'Avenir Next', 'Segoe UI', sans-serif;
-  line-height: 1.5;
+  /* — Warm ivory paper palette — */
+  --paper: #f1eee6;
+  --paper-deep: #e8e4d9;
+  --surface: #fbfaf6;
+  --surface-inset: #f5f2ea;
+
+  /* — Ink (warm near-black → muted) — */
+  --ink: #211e17;
+  --ink-2: #57534a;
+  --ink-3: #837d70;
+
+  /* — Hairlines — */
+  --line: rgba(33, 30, 23, 0.14);
+  --line-soft: rgba(33, 30, 23, 0.08);
+
+  /* — Clay: the single Anthropic accent — */
+  --clay: #b5542f;          /* action surfaces (white text ≥5:1) */
+  --clay-deep: #97431f;     /* clay text on ivory (≥5.5:1) */
+  --clay-tint: rgba(181, 84, 47, 0.1);
+  --clay-line: rgba(181, 84, 47, 0.32);
+
+  /* — Sage: the exam / success semantic — */
+  --sage: #4e6b4a;
+  --sage-deep: #3c5639;
+  --sage-tint: rgba(78, 107, 74, 0.12);
+
+  /* — Danger — */
+  --danger: #a93b2b;
+  --danger-tint: rgba(169, 59, 43, 0.1);
+
+  /* — Radius scale (restrained, not pill) — */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+
+  /* — Elevation: mostly borders, whisper-quiet shadows — */
+  --shadow-sm: 0 1px 2px rgba(33, 30, 23, 0.04);
+  --shadow-md: 0 14px 40px -24px rgba(33, 30, 23, 0.4);
+
+  /* — Type roles — */
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Hanken Grotesk', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  font-family: var(--font-body);
+  line-height: 1.55;
   font-weight: 400;
-  color: #203040;
-  background:
-    radial-gradient(circle at top left, rgba(255, 177, 89, 0.38), transparent 25%),
-    radial-gradient(circle at right center, rgba(76, 141, 190, 0.18), transparent 30%),
-    linear-gradient(180deg, #fff9ef 0%, #f5efe5 100%);
+  color: var(--ink);
+  color-scheme: light;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -20,11 +68,19 @@
 html,
 body,
 #root {
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 body {
   margin: 0;
+  background-color: var(--paper);
+  /* Faint warm light from the top — barely there, keeps it flat/calm */
+  background-image: radial-gradient(
+    120% 80% at 50% -10%,
+    rgba(255, 255, 255, 0.6),
+    transparent 60%
+  );
+  background-attachment: fixed;
 }
 
 button,
@@ -32,4 +88,34 @@ input,
 textarea,
 select {
   font: inherit;
+  color: inherit;
+}
+
+/* Editorial numerals where headings carry them */
+h1,
+h2,
+h3 {
+  font-feature-settings: 'ss01';
+}
+
+/* Accessible, on-brand focus ring */
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--clay-tint);
+  color: var(--clay-deep);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -29,6 +29,11 @@ function normalizeDifficultyLevel(difficultyLevel) {
   return difficultyLevel.trim().toLowerCase()
 }
 
+function formatRoleLabel(role) {
+  const name = role.replace('ROLE_', '')
+  return name.charAt(0) + name.slice(1).toLowerCase()
+}
+
 function getSectionMeta(currentView, activeQuiz) {
   switch (currentView) {
     case 'questions':
@@ -360,11 +365,12 @@ function App() {
     <main className="app-shell">
       <header className="site-header">
         <div className="brand-block">
-          <p className="brand-kicker">Quiz App</p>
           <div>
+            <p className="brand-kicker">Quiz App</p>
             <strong className="brand-title">Quiz Control Center</strong>
             <p className="brand-copy">Create, save, and take quizzes from one place.</p>
           </div>
+          {userRole && <span className="role-badge">{formatRoleLabel(userRole)}</span>}
         </div>
 
         <nav className="site-nav" aria-label="Main navigation">
@@ -420,10 +426,9 @@ function App() {
           </button>
 
           <button
-            className="nav-button"
+            className="nav-button nav-button--logout"
             type="button"
             onClick={handleLogout}
-            style={{ marginLeft: 'auto', color: '#c47a20' }}
           >
             Logout
           </button>

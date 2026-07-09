@@ -47,8 +47,9 @@ export default function HomePage({
           /* Step 1: Question Bank */
           <section className="home-phase home-phase--prepare">
             <div className="phase-header">
-              <span className="phase-badge phase-badge--prepare">Step 1</span>
+              <span className="phase-index">01</span>
               <div>
+                <p className="phase-kicker">Prepare</p>
                 <h2 className="phase-title">Question Bank</h2>
                 <p className="phase-desc">Add and manage your questions.</p>
               </div>
@@ -75,8 +76,9 @@ export default function HomePage({
           /* Step 2: Create Your Quiz */
           <section className="home-phase home-phase--build">
             <div className="phase-header">
-              <span className="phase-badge phase-badge--build">Step 2</span>
+              <span className="phase-index">02</span>
               <div>
+                <p className="phase-kicker">Build</p>
                 <h2 className="phase-title">Create Your Quiz</h2>
                 <p className="phase-desc">Build and save quizzes from your questions.</p>
               </div>
@@ -99,8 +101,9 @@ export default function HomePage({
         {/* Step 3: Take Exam */}
         <section className="home-phase home-phase--exam">
           <div className="phase-header">
-            <span className="phase-badge phase-badge--exam">Step 3</span>
+            <span className="phase-index">03</span>
             <div>
+              <p className="phase-kicker">Examine</p>
               <h2 className="phase-title">Take Exam</h2>
               <p className="phase-desc">Sit the quiz and see your score.</p>
             </div>
