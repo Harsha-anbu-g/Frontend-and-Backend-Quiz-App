@@ -88,9 +88,19 @@ export default function QuizPlayer({ activeQuiz, onComplete }) {
 
   return (
     <form className="quiz-form" onSubmit={handleSubmit}>
-      <p className="feedback">
-        Answered {answeredCount} of {questions.length} questions
-      </p>
+      <div className="feedback quiz-progress">
+        <span>
+          Answered {answeredCount} of {questions.length} questions
+        </span>
+        <span className="quiz-progress-track" aria-hidden="true">
+          <span
+            className="quiz-progress-fill"
+            style={{
+              transform: `scaleX(${questions.length ? answeredCount / questions.length : 0})`,
+            }}
+          />
+        </span>
+      </div>
 
       {questions.map((question, index) => (
         <article className="quiz-question-card" key={question.id}>

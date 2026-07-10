@@ -38,47 +38,40 @@ function getSectionMeta(currentView, activeQuiz) {
   switch (currentView) {
     case 'questions':
       return {
-        eyebrow: 'Prepare — Step 1',
-        title: 'Question Bank',
-        note: 'Review, filter, and delete questions. Use "+ Add Question" to grow your bank.',
+        title: 'Question bank',
+        note: 'Filter by category, add, or delete.',
       }
     case 'add':
       return {
-        eyebrow: 'Add Question',
-        title: 'Create a Question',
-        note: 'Add a new question so it can be reused in future quizzes.',
+        title: 'New question',
+        note: 'Reusable in any future quiz.',
       }
     case 'createQuiz':
       return {
-        eyebrow: 'Create Quiz',
-        title: 'Build a Quiz',
-        note: 'Use category, difficulty, and question count filters to generate a new quiz.',
+        title: 'New quiz',
+        note: 'Questions come from your bank.',
       }
     case 'savedQuizzes':
       return {
-        eyebrow: 'Saved Quizzes',
-        title: 'Quiz Library',
-        note: 'Open a saved quiz later or delete quizzes you no longer need.',
+        title: 'Quiz library',
+        note: 'Take a quiz, or delete ones you no longer need.',
       }
     case 'takeQuiz':
       return {
-        eyebrow: 'Take Quiz',
-        title: activeQuiz?.title ?? 'Take Quiz',
+        title: activeQuiz?.title ?? 'Take quiz',
         note: activeQuiz
-          ? 'Answer every question, then submit to calculate your score.'
-          : 'Choose a saved quiz or create a new one first.',
+          ? 'Answer everything, then submit.'
+          : 'Pick a quiz from the library first.',
       }
     case 'result':
       return {
-        eyebrow: 'Result',
-        title: 'Quiz Result',
-        note: 'See the score returned by the backend after submission.',
+        title: 'Result',
+        note: 'Your submitted quiz, marked.',
       }
     default:
       return {
-        eyebrow: 'Home',
-        title: 'Quiz Dashboard',
-        note: 'Open the section you want from the navigation or home cards.',
+        title: 'Home',
+        note: '',
       }
   }
 }
@@ -341,10 +334,6 @@ function App() {
     }
   }
 
-  function handleOpenTakeQuiz() {
-    navigateTo(activeQuiz ? 'takeQuiz' : 'savedQuizzes')
-  }
-
   function handleOpenResult() {
     if (quizResult) {
       navigateTo('result')
@@ -365,11 +354,7 @@ function App() {
     <main className="app-shell">
       <header className="site-header">
         <div className="brand-block">
-          <div>
-            <p className="brand-kicker">Quiz App</p>
-            <strong className="brand-title">Quiz Control Center</strong>
-            <p className="brand-copy">Create, save, and take quizzes from one place.</p>
-          </div>
+          <strong className="brand-title">Exam Studio</strong>
           {userRole && <span className="role-badge">{formatRoleLabel(userRole)}</span>}
         </div>
 
@@ -439,25 +424,21 @@ function App() {
 
       {currentView === 'home' ? (
         <HomePage
-          questionCount={questionBankCount}
-          savedQuizCount={savedQuizzes.length}
-          activeQuiz={activeQuiz}
-          quizResult={quizResult}
           userRole={userRole}
+          questionCount={questionBankCount}
+          quizzes={savedQuizzes}
+          isLoadingQuizzes={isLoadingSavedQuizzes}
+          quizResult={quizResult}
           onBrowseQuestions={() => navigateTo('questions')}
           onAddQuestion={() => navigateTo('add')}
           onCreateQuiz={() => navigateTo('createQuiz')}
-          onOpenSavedQuizzes={() => navigateTo('savedQuizzes')}
-          onTakeQuiz={handleOpenTakeQuiz}
+          onTakeQuiz={handleTakeSavedQuiz}
           onViewResult={handleOpenResult}
         />
       ) : (
         <section className="content-panel">
           <div className="section-header">
-            <div>
-              <p className="eyebrow">{sectionMeta.eyebrow}</p>
-              <h2>{sectionMeta.title}</h2>
-            </div>
+            <h2>{sectionMeta.title}</h2>
             <span className="section-note">{sectionMeta.note}</span>
           </div>
 
@@ -549,7 +530,7 @@ function App() {
 
           {currentView === 'result' ? (
             quizResult ? (
-              <article className="result-card">
+              <article className="result-card result-card--graded">
                 <p className="summary-label">Quiz complete</p>
                 <strong>{quizResult.title}</strong>
                 <h3>
@@ -585,8 +566,7 @@ function App() {
         <div className="footer-about">
           <p className="footer-name">Built by Harshavardhan</p>
           <p className="footer-bio">
-            Full-stack developer passionate about Java, Spring Boot, and React.
-            This app was built and deployed as a personal project to practice end-to-end development.
+            Java · Spring Boot · React — a personal end-to-end project.
           </p>
           <a
             className="footer-link"

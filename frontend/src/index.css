@@ -5,22 +5,23 @@
    ============================================================ */
 
 :root {
-  /* — Paper: cleaner warm-white, less cream — */
-  --paper: #efece4;
-  --paper-deep: #e4e0d6;
+  /* — Paper: near-white, out of the cream cluster — */
+  --paper: #fafaf8;
+  --paper-deep: #efeeea;
   --surface: #ffffff;
-  --surface-inset: #f4f1ea;
+  --surface-inset: #f5f4f0;
 
-  /* — Ink (warm near-black → muted) — */
-  --ink: #1a180f;
-  --ink-2: #55514a;
-  --ink-3: #837e72;
+  /* — Ink (graphite near-black → muted) — */
+  --ink: #1c1b18;
+  --ink-2: #57554e;
+  --ink-3: #8a877d;
 
   /* — Hairlines — */
-  --line: rgba(26, 24, 15, 0.16);
-  --line-soft: rgba(26, 24, 15, 0.09);
+  --line: rgba(28, 27, 24, 0.15);
+  --line-soft: rgba(28, 27, 24, 0.08);
 
-  /* — Clay: now a sharp ACCENT only (tags, active state, marks) — */
+  /* — Clay: the teacher's red pen ONLY — your marked answer, the
+     graded stamp, corrections. Never structural chrome. — */
   --clay: #b5542f;
   --clay-deep: #97431f;
   --clay-tint: rgba(181, 84, 47, 0.1);
@@ -43,6 +44,13 @@
   /* — Elevation: mostly borders, whisper-quiet shadows — */
   --shadow-sm: 0 1px 2px rgba(26, 24, 15, 0.05);
   --shadow-md: 0 16px 44px -26px rgba(26, 24, 15, 0.45);
+  --shadow-card: inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 1px 2px rgba(26, 24, 15, 0.04), 0 12px 32px -24px rgba(26, 24, 15, 0.35);
+
+  /* — Motion: strong custom curves, never default ease — */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-io: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-press: cubic-bezier(0.32, 0.72, 0, 1);
 
   /* — Type roles: grotesque display + grotesque body + mono data — */
   --font-display: 'Bricolage Grotesque', 'Hanken Grotesk', sans-serif;
@@ -74,6 +82,18 @@ body,
 body {
   margin: 0;
   background-color: var(--paper);
+}
+
+/* Physical paper grain — fixed, pointer-transparent, barely there.
+   Makes the ivory read as material instead of a flat hex value. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.024;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 button,

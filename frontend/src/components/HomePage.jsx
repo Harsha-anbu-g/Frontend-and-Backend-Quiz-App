@@ -1,146 +1,102 @@
 export default function HomePage({
-  questionCount,
-  savedQuizCount,
-  activeQuiz,
-  quizResult,
   userRole,
-  onBrowseQuestions,
+  questionCount,
+  quizzes,
+  isLoadingQuizzes,
+  quizResult,
   onAddQuestion,
+  onBrowseQuestions,
   onCreateQuiz,
-  onOpenSavedQuizzes,
   onTakeQuiz,
   onViewResult,
 }) {
+  const isTeacher = userRole === 'ROLE_TEACHER'
+
   return (
-    <>
-      <section className="home-hero">
-        <div className="home-hero-copy">
-          <p className="eyebrow">How it works</p>
-          <h1>Prepare. Then examine.</h1>
-          <p className="hero-copy">
-            Build your question bank first, then generate quizzes from those questions and test yourself.
-          </p>
+    <div className="workspace">
+      <section className="workspace-section" aria-label="Your quizzes">
+        <div className="workspace-head">
+          <h2>Your quizzes</h2>
+          {isTeacher && (
+            <button className="primary-button" type="button" onClick={onCreateQuiz}>
+              + New quiz
+            </button>
+          )}
         </div>
 
-        <div className="home-stats">
-          {userRole === 'ROLE_TEACHER' && (
-            <article className="home-stat-card">
-              <span className="home-stat-label">Questions in bank</span>
-              <strong>{questionCount}</strong>
-            </article>
-          )}
-          {userRole === 'ROLE_TEACHER' && (
-            <article className="home-stat-card">
-              <span className="home-stat-label">Saved quizzes</span>
-              <strong>{savedQuizCount}</strong>
-            </article>
-          )}
-          <article className="home-stat-card">
-            <span className="home-stat-label">Latest score</span>
-            <strong>{quizResult ? `${quizResult.score}/${quizResult.total}` : '—'}</strong>
-          </article>
-        </div>
+        {isLoadingQuizzes ? (
+          <p className="empty-row">Loading quizzes…</p>
+        ) : quizzes.length === 0 ? (
+          <p className="empty-row">
+            No quizzes yet.{' '}
+            {isTeacher ? (
+              <button className="link-button" type="button" onClick={onCreateQuiz}>
+                Create your first quiz
+              </button>
+            ) : (
+              'Check back once your teacher has published one.'
+            )}
+          </p>
+        ) : (
+          quizzes.map((quiz) => (
+            <div className="quiz-row" key={quiz.quizId}>
+              <div className="quiz-row-main">
+                <span className="quiz-row-title">{quiz.title}</span>
+                <span className="quiz-row-meta">
+                  {quiz.questionCount} question{quiz.questionCount === 1 ? '' : 's'}
+                </span>
+              </div>
+              <div className="row-actions">
+                <button className="row-button" type="button" onClick={() => onTakeQuiz(quiz)}>
+                  Take →
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </section>
 
-      <div className="home-phases">
-        {userRole === 'ROLE_TEACHER' && (
-          /* Step 1: Question Bank */
-          <section className="home-phase home-phase--prepare">
-            <div className="phase-header">
-              <span className="phase-index">01</span>
-              <div>
-                <p className="phase-kicker">Prepare</p>
-                <h2 className="phase-title">Question Bank</h2>
-                <p className="phase-desc">Add and manage your questions.</p>
-              </div>
-            </div>
-
-            <article className="home-card">
-              <p className="summary-label">Question bank</p>
-              <h3>Browse &amp; manage questions</h3>
-              <p>View all stored questions, filter by category, add new ones, or delete old ones.</p>
-              <div className="home-card-actions">
-                <button className="primary-button" type="button" onClick={onBrowseQuestions}>
-                  Open Question Bank
-                </button>
-                <button className="secondary-button" type="button" onClick={onAddQuestion}>
-                  Add Question
-                </button>
-              </div>
-              <span className="home-card-count">{questionCount} questions stored</span>
-            </article>
-          </section>
-        )}
-
-        {userRole === 'ROLE_TEACHER' && (
-          /* Step 2: Create Your Quiz */
-          <section className="home-phase home-phase--build">
-            <div className="phase-header">
-              <span className="phase-index">02</span>
-              <div>
-                <p className="phase-kicker">Build</p>
-                <h2 className="phase-title">Create Your Quiz</h2>
-                <p className="phase-desc">Build and save quizzes from your questions.</p>
-              </div>
-            </div>
-
-            <article className="home-card">
-              <p className="summary-label">Quiz builder</p>
-              <h3>Create a new quiz</h3>
-              <p>Filter by category and difficulty to generate a quiz from your question bank.</p>
-              <div className="home-card-actions">
-                <button className="primary-button" type="button" onClick={onCreateQuiz}>
-                  Create Quiz
-                </button>
-              </div>
-            </article>
-
-          </section>
-        )}
-
-        {/* Step 3: Take Exam */}
-        <section className="home-phase home-phase--exam">
-          <div className="phase-header">
-            <span className="phase-index">03</span>
-            <div>
-              <p className="phase-kicker">Examine</p>
-              <h2 className="phase-title">Take Exam</h2>
-              <p className="phase-desc">Sit the quiz and see your score.</p>
+      {isTeacher && (
+        <section className="workspace-section" aria-label="Question bank">
+          <div className="workspace-head">
+            <h2>Question bank</h2>
+            <button className="row-button" type="button" onClick={onAddQuestion}>
+              + Add question
+            </button>
+          </div>
+          <div className="fact-row">
+            <span className="fact-label">
+              {questionCount} question{questionCount === 1 ? '' : 's'} stored
+            </span>
+            <div className="row-actions">
+              <button className="row-button" type="button" onClick={onBrowseQuestions}>
+                Open →
+              </button>
             </div>
           </div>
-
-          <article className="home-card">
-            <p className="summary-label">Take Quiz</p>
-            <h3>Your saved quizzes</h3>
-            <p>Pick a saved quiz and start the exam. Your answers are submitted for scoring.</p>
-            <div className="home-card-actions">
-              <button className="primary-button" type="button" onClick={onOpenSavedQuizzes}>
-                Take Quiz
-              </button>
-            </div>
-          </article>
-
-          <article className="home-card">
-            <p className="summary-label">Results</p>
-            <h3>{quizResult ? `${quizResult.score} / ${quizResult.total}` : 'No result yet'}</h3>
-            <p>
-              {quizResult
-                ? `Latest: ${quizResult.title}`
-                : 'Submit a quiz to see your score here.'}
-            </p>
-            <div className="home-card-actions">
-              <button
-                className="primary-button"
-                type="button"
-                onClick={onViewResult}
-                disabled={!quizResult}
-              >
-                View Result
-              </button>
-            </div>
-          </article>
         </section>
-      </div>
-    </>
+      )}
+
+      <section className="workspace-section" aria-label="Latest result">
+        <div className="workspace-head">
+          <h2>Latest result</h2>
+        </div>
+        {quizResult ? (
+          <div className="fact-row">
+            <span className="fact-label">{quizResult.title}</span>
+            <div className="row-actions">
+              <span className="fact-value">
+                {quizResult.score}/{quizResult.total}
+              </span>
+              <button className="row-button" type="button" onClick={onViewResult}>
+                View →
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p className="empty-row">Nothing graded yet. Take a quiz to get a score.</p>
+        )}
+      </section>
+    </div>
   )
 }

@@ -25,9 +25,8 @@ export default function LoginPage({ onLogin, onGoToRegister }) {
     <main className="auth-shell">
       <div className="auth-card">
         <div className="brand-block">
-          <p className="brand-kicker">Quiz App</p>
           <strong className="brand-title">Welcome back</strong>
-          <p className="brand-copy">Sign in to continue.</p>
+          <p className="auth-subtitle">Sign in to Exam Studio.</p>
         </div>
 
         <div className="auth-steps">

@@ -31,9 +31,8 @@ export default function RegisterPage({ onRegistered, onGoToLogin }) {
     <main className="auth-shell">
       <div className="auth-card">
         <div className="brand-block">
-          <p className="brand-kicker">Quiz App</p>
           <strong className="brand-title">Create account</strong>
-          <p className="brand-copy">Join as a teacher or student.</p>
+          <p className="auth-subtitle">Join as a teacher or student.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
